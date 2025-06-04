@@ -95,3 +95,30 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+Modal visible={confirmModalVisible} transparent={true} animationType="fade">
+          <View style={styles.modalBackground}>
+            <View style={styles.confirmBox}>
+              <Text style={styles.title}>Exit?</Text>
+
+              <View style={styles.buttonRow}>
+                <TouchableOpacity
+                  style={styles.noButton}
+                  onPress={() => setConfirmModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>No</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.yesButton}
+                  onPress={() => {
+                    setConfirmModalVisible(false);
+                    setMainModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.buttonText}>Yes</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
