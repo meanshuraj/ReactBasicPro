@@ -1,4 +1,4 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+ãThis is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
 
@@ -122,3 +122,78 @@ Modal visible={confirmModalVisible} transparent={true} animationType="fade">
             </View>
           </View>
         </Modal>
+
+
+//
+
+
+Modal
+        transparent
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={closeModal}
+      >
+        <TouchableWithoutFeedback onPress={closeModal}>
+          <View style={styles.overlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Scrollable Content</Text>
+                <ScrollView style={styles.scrollArea}>
+                  {[...Array(20)].map((_, index) => (
+                    <Text key={index} style={styles.scrollItem}>Item {index + 1}</Text>
+                  ))}
+                </ScrollView>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    </View>
+  );
+};
+
+const modalHeight = height * 0.3;
+const modalWidth = width * 0.5;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  openButton: {
+    padding: 10,
+    backgroundColor: '#4287f5',
+    borderRadius: 8
+  },
+  buttonText: {
+    color: 'white'
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.4)'
+  },
+  modalContent: {
+    alignSelf: 'center',
+    height: height * 0.3,
+    width: width * 0.5,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 10
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  scrollArea: {
+    flex: 1
+  },
+  scrollItem: {
+    paddingVertical: 6,
+    fontSize: 14
+  }
+});
+
+export default CustomM
