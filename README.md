@@ -1,354 +1,73 @@
-ãThis is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
-
-# Getting Started
-
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
-
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
-
-Modal visible={confirmModalVisible} transparent={true} animationType="fade">
-          <View style={styles.modalBackground}>
-            <View style={styles.confirmBox}>
-              <Text style={styles.title}>Exit?</Text>
-
-              <View style={styles.buttonRow}>
-                <TouchableOpacity
-                  style={styles.noButton}
-                  onPress={() => setConfirmModalVisible(false)}
-                >
-                  <Text style={styles.buttonText}>No</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.yesButton}
-                  onPress={() => {
-                    setConfirmModalVisible(false);
-                    setMainModalVisible(false);
-                  }}
-                >
-                  <Text style={styles.buttonText}>Yes</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-
-
-//
-
-
-Modal
-        transparent
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={closeModal}
-      >
-        <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={styles.overlay}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Scrollable Content</Text>
-                <ScrollView style={styles.scrollArea}>
-                  {[...Array(20)].map((_, index) => (
-                    <Text key={index} style={styles.scrollItem}>Item {index + 1}</Text>
-                  ))}
-                </ScrollView>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-    </View>
-  );
-};
-
-const modalHeight = height * 0.3;
-const modalWidth = width * 0.5;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  openButton: {
-    padding: 10,
-    backgroundColor: '#4287f5',
-    borderRadius: 8
-  },
-  buttonText: {
-    color: 'white'
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.4)'
-  },
-  modalContent: {
-    alignSelf: 'center',
-    height: height * 0.3,
-    width: width * 0.5,
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 10
-  },
-  modalTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  scrollArea: {
-    flex: 1
-  },
-  scrollItem: {
-    paddingVertical: 6,
-    fontSize: 14
-  }
-});
-
-export default CustomM
-
-
 import React, { useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Pie from 'react-native-pie';
 
-const { height, width } = Dimensions.get('window');
+export default function App() {
+  const [selected, setSelected] = useState(null);
 
-const CustomModal = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
+  const data = [
+    { percentage: 40, color: 'red', label: 'Red' },
+    { percentage: 30, color: 'blue', label: 'Blue' },
+    { percentage: 30, color: 'green', label: 'Green' },
+  ];
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={openModal} style={styles.openButton}>
-        <Text style={styles.buttonText}>Open Modal</Text>
-      </TouchableOpacity>
-
-      <Modal
-        transparent
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={closeModal}
-      >
-        <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={styles.overlay}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Scrollable Content</Text>
-                <ScrollView style={styles.scrollArea}>
-                  {[...Array(20)].map((_, index) => (
-                    <Text key={index} style={styles.scrollItem}>Item {index + 1}</Text>
-                  ))}
-                </ScrollView>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-    </View>
-  );
-};
-
-const modalHeight = height * 0.3;
-const modalWidth = width * 0.5;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  openButton: {
-    padding: 10,
-    backgroundColor: '#4287f5',
-    borderRadius: 8
-  },
-  buttonText: {
-    color: 'white'
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.4)'
-  },
-  modalContent: {
-    alignSelf: 'center',
-    height: height * 0.3,
-    width: width * 0.5,
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 10
-  },
-  modalTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  scrollArea: {
-    flex: 1
-  },
-  scrollItem: {
-    paddingVertical: 6,
-    fontSize: 14
-  }
-});
-
-export default CustomModal;
-
-
-
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
-import { PieChart } from 'react-native-chart-kit';
-
-const screenWidth = Dimensions.get('window').width;
-
-const chartConfig = {
-  backgroundGradientFrom: "#fff",
-  backgroundGradientTo: "#fff",
-  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-};
-
-const data = [
-  { name: "Red", population: 40, color: "red", legendFontColor: "#7F7F7F", legendFontSize: 15 },
-  { name: "Blue", population: 30, color: "blue", legendFontColor: "#7F7F7F", legendFontSize: 15 },
-  { name: "Green", population: 30, color: "green", legendFontColor: "#7F7F7F", legendFontSize: 15 },
-];
-
-export default function App() {
-  const [tooltip, setTooltip] = useState(null);
-
-  return (
-    <View>
-      <PieChart
-        data={data}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        center={[10, 0]}
-        absolute
+      <Pie
+        radius={100}
+        innerRadius={60}
+        sections={data}
+        strokeCap={'butt'}
+        backgroundColor="#ddd"
       />
 
-      {/* Fake overlay with touchable zones */}
-      <View style={{ position: 'absolute', top: 0, left: 0, width: screenWidth, height: 220 }}>
-        {/* Simple zones (just for example, you'd adjust positions) */}
-        {data.map((slice, index) => (
-          <TouchableOpacity
-            key={index}
-            style={{
-              position: 'absolute',
-              top: 100,
-              left: 50 + index * 80,
-              width: 60,
-              height: 60,
-              backgroundColor: 'transparent',
-            }}
-            onPress={() => setTooltip(slice)}
-          />
-        ))}
+      {/* Overlay Touchable zones */}
+      <View style={StyleSheet.absoluteFill}>
+        <View style={styles.touchContainer}>
+          {data.map((slice, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.touchBox}
+              onPress={() => setSelected(slice)}
+            />
+          ))}
+        </View>
       </View>
 
-      {tooltip && (
-        <View style={{ position: 'absolute', top: 20, left: 20, backgroundColor: 'white', padding: 10, borderRadius: 8, elevation: 5 }}>
-          <Text>{tooltip.name}</Text>
-          <Text>{tooltip.population}%</Text>
+      {/* Tooltip */}
+      {selected && (
+        <View style={styles.tooltip}>
+          <Text style={{ fontWeight: 'bold' }}>{selected.label}</Text>
+          <Text>{selected.percentage}%</Text>
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  touchContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 40,
+    marginTop: 50,
+  },
+  touchBox: {
+    width: 60,
+    height: 120,
+    backgroundColor: 'transparent',
+  },
+  tooltip: {
+    position: 'absolute',
+    top: 20,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 8,
+    elevation: 5,
+  },
+});
