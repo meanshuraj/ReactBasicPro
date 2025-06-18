@@ -286,3 +286,69 @@ const styles = StyleSheet.create({
 });
 
 export default CustomModal;
+
+
+
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { PieChart } from 'react-native-chart-kit';
+
+const screenWidth = Dimensions.get('window').width;
+
+const chartConfig = {
+  backgroundGradientFrom: "#fff",
+  backgroundGradientTo: "#fff",
+  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+};
+
+const data = [
+  { name: "Red", population: 40, color: "red", legendFontColor: "#7F7F7F", legendFontSize: 15 },
+  { name: "Blue", population: 30, color: "blue", legendFontColor: "#7F7F7F", legendFontSize: 15 },
+  { name: "Green", population: 30, color: "green", legendFontColor: "#7F7F7F", legendFontSize: 15 },
+];
+
+export default function App() {
+  const [tooltip, setTooltip] = useState(null);
+
+  return (
+    <View>
+      <PieChart
+        data={data}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        center={[10, 0]}
+        absolute
+      />
+
+      {/* Fake overlay with touchable zones */}
+      <View style={{ position: 'absolute', top: 0, left: 0, width: screenWidth, height: 220 }}>
+        {/* Simple zones (just for example, you'd adjust positions) */}
+        {data.map((slice, index) => (
+          <TouchableOpacity
+            key={index}
+            style={{
+              position: 'absolute',
+              top: 100,
+              left: 50 + index * 80,
+              width: 60,
+              height: 60,
+              backgroundColor: 'transparent',
+            }}
+            onPress={() => setTooltip(slice)}
+          />
+        ))}
+      </View>
+
+      {tooltip && (
+        <View style={{ position: 'absolute', top: 20, left: 20, backgroundColor: 'white', padding: 10, borderRadius: 8, elevation: 5 }}>
+          <Text>{tooltip.name}</Text>
+          <Text>{tooltip.population}%</Text>
+        </View>
+      )}
+    </View>
+  );
+}
