@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+iimport React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Pie from 'react-native-pie';
 
@@ -71,3 +71,34 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
+
+import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {Platform} from 'react-native';
+
+const checkNotificationPermission = async () => {
+  const permission = Platform.select({
+    ios: PERMISSIONS.IOS.NOTIFICATIONS,
+    android: PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+  });
+
+  const result = await check(permission);
+
+  switch (result) {
+    case RESULTS.UNAVAILABLE:
+      console.log('This feature is not available on this device/context');
+      break;
+    case RESULTS.DENIED:
+      console.log('Permission denied, but requestable');
+      break;
+    case RESULTS.LIMITED:
+      console.log('Permission is limited');
+      break;
+    case RESULTS.GRANTED:
+      console.log('Notifications are enabled ✅');
+      break;
+    case RESULTS.BLOCKED:
+      console.log('Notifications are blocked ❌');
+      break;
+  }
+};
