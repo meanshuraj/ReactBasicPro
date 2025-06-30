@@ -1,68 +1,74 @@
  import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Pie from 'react-native-pie';
+import { View, Text as RNText } from 'react-native';
+import { VictoryPie } from 'victory-native';
 
-const data = [
-  { name: 'Pop1', value: 13, color: '#ff4d4d' },
-  { name: 'Pop2', value: 40, color: '#4d79ff' },
-  { name: 'Pop3', value: 47, color: '#00cc99' },
+const pieChartData = [
+  {
+    name: 'Pop1',
+    population: 13,
+    color: '#ff4d4d',
+    legendFontColor: '#7F7F7F',
+    legendFontSize: 14,
+  },
+  {
+    name: 'Pop2',
+    population: 40,
+    color: '#4d79ff',
+    legendFontColor: '#7F7F7F',
+    legendFontSize: 14,
+  },
+  {
+    name: 'Pop3',
+    population: 47,
+    color: '#00cc99',
+    legendFontColor: '#7F7F7F',
+    legendFontSize: 14,
+  },
 ];
 
-const total = data.reduce((sum, d) => sum + d.value, 0);
-const radius = 80;
+const VictoryPieChart = () => {
+  const total = pieChartData.reduce((sum, item) => sum + item.population, 0);
 
-const PieChartWithLabels = () => {
-  let cumulativePercent = 0;
+  // Transform for Victory
+  const pieData = pieChartData.map((item) => ({
+    x: item.name,
+    y: item.population,
+  }));
+
+  const colorScale = pieChartData.map((item) => item.color);
 
   return (
-    <View style={styles.container}>
-      {/* Pie Chart */}
-      <View style={{ width: 200, height: 200 }}>
-        <Pie
-          radius={radius}
-          innerRadius={0}
-          sections={data.map((d) => ({
-            percentage: (d.value / total) * 100,
-            color: d.color,
-          }))}
-          dividerSize={2}
-          strokeCap={'butt'}
-        />
-
-        {/* Labels outside each arc */}
-        {data.map((item, index) => {
-          const percent = (item.value / total) * 100;
-          const midAngle = (cumulativePercent + percent / 2) * 3.6; // 360 degrees
-          const radians = (midAngle * Math.PI) / 180;
-          const x = 100 + (radius + 20) * Math.cos(radians);
-          const y = 100 + (radius + 20) * Math.sin(radians);
-          cumulativePercent += percent;
-
-          return (
-            <Text
-              key={index}
-              style={[
-                styles.label,
-                {
-                  left: x - 10,
-                  top: y - 10,
-                },
-              ]}
-            >
-              {percent.toFixed(0)}%
-            </Text>
-          );
-        })}
-      </View>
+    <View style={{ alignItems: 'center', marginTop: 40 }}>
+      <VictoryPie
+        data={pieData}
+        width={300}
+        height={300}
+        colorScale={colorScale}
+        innerRadius={0}
+        labelRadius={({ radius }) => radius + 15}
+        labels={({ datum }) =>
+          `${((datum.y / total) * 100).toFixed(0)}%`
+        }
+        style={{
+          labels: { fontSize: 14, fill: 'black' },
+        }}
+      />
 
       {/* Legend below */}
       <View style={{ marginTop: 20 }}>
-        {data.map((item, index) => {
-          const percent = ((item.value / total) * 100).toFixed(1);
+        {pieChartData.map((item, index) => {
+          const percent = ((item.population / total) * 100).toFixed(1);
           return (
-            <Text key={index} style={{ fontSize: 14, color: item.color }}>
+            <RNText
+              key={index}
+              style={{
+                fontSize: item.legendFontSize,
+                marginVertical: 2,
+                color: item.legendFontColor,
+              }}
+            >
               {item.name}: {percent}%
-            </Text>
+            </RNText>
           );
         })}
       </View>
@@ -70,16 +76,4 @@ const PieChartWithLabels = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  label: {
-    position: 'absolute',
-    fontSize: 12,
-    color: 'black',
-  },
-});
-
-export default PieChartWithLabels;
+export default VictoryPieChart;
