@@ -1,85 +1,68 @@
  import React from 'react';
-import { View, Text as RNText } from 'react-native';
-import Svg, { G, Path, Text } from 'react-native-svg';
+import { View, Text, StyleSheet } from 'react-native';
+import Pie from 'react-native-pie';
 
 const data = [
-  { label: 'Pop1', value: 13, color: '#ff4d4d' },
-  { label: 'Pop2', value: 40, color: '#4d79ff' },
-  { label: 'Pop3', value: 47, color: '#00cc99' },
+  { name: 'Pop1', value: 13, color: '#ff4d4d' },
+  { name: 'Pop2', value: 40, color: '#4d79ff' },
+  { name: 'Pop3', value: 47, color: '#00cc99' },
 ];
 
-const radius = 100;
-const center = 120;
 const total = data.reduce((sum, d) => sum + d.value, 0);
+const radius = 80;
 
-const PieChartSimple = () => {
-  let startAngle = 0;
-
-  const slices = data.map((slice, index) => {
-    const angle = (slice.value / total) * 2 * Math.PI;
-    const endAngle = startAngle + angle;
-
-    const x1 = center + radius * Math.cos(startAngle - Math.PI / 2);
-    const y1 = center + radius * Math.sin(startAngle - Math.PI / 2);
-    const x2 = center + radius * Math.cos(endAngle - Math.PI / 2);
-    const y2 = center + radius * Math.sin(endAngle - Math.PI / 2);
-
-    const largeArc = angle > Math.PI ? 1 : 0;
-
-    const d = `
-      M ${center} ${center}
-      L ${x1} ${y1}
-      A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}
-      Z
-    `;
-
-    // Label position (just outside each arc)
-    const midAngle = startAngle + angle / 2;
-    const labelX = center + (radius + 15) * Math.cos(midAngle - Math.PI / 2);
-    const labelY = center + (radius + 15) * Math.sin(midAngle - Math.PI / 2);
-
-    const percent = ((slice.value / total) * 100).toFixed(0);
-
-    startAngle = endAngle;
-
-    return (
-      <G key={index}>
-        <Path d={d} fill={slice.color} />
-        <Text
-          x={labelX}
-          y={labelY}
-          fill="black"
-          fontSize="12"
-          textAnchor="middle"
-          alignmentBaseline="middle"
-        >
-          {percent}%
-        </Text>
-      </G>
-    );
-  });
+const PieChartWithLabels = () => {
+  let cumulativePercent = 0;
 
   return (
-    <View style={{ alignItems: 'center', marginTop: 40 }}>
-      <Svg height="240" width="240">
-        {slices}
-      </Svg>
+    <View style={styles.container}>
+      {/* Pie Chart */}
+      <View style={{ width: 200, height: 200 }}>
+        <Pie
+          radius={radius}
+          innerRadius={0}
+          sections={data.map((d) => ({
+            percentage: (d.value / total) * 100,
+            color: d.color,
+          }))}
+          dividerSize={2}
+          strokeCap={'butt'}
+        />
 
-      {/* Legend below the chart */}
+        {/* Labels outside each arc */}
+        {data.map((item, index) => {
+          const percent = (item.value / total) * 100;
+          const midAngle = (cumulativePercent + percent / 2) * 3.6; // 360 degrees
+          const radians = (midAngle * Math.PI) / 180;
+          const x = 100 + (radius + 20) * Math.cos(radians);
+          const y = 100 + (radius + 20) * Math.sin(radians);
+          cumulativePercent += percent;
+
+          return (
+            <Text
+              key={index}
+              style={[
+                styles.label,
+                {
+                  left: x - 10,
+                  top: y - 10,
+                },
+              ]}
+            >
+              {percent.toFixed(0)}%
+            </Text>
+          );
+        })}
+      </View>
+
+      {/* Legend below */}
       <View style={{ marginTop: 20 }}>
         {data.map((item, index) => {
           const percent = ((item.value / total) * 100).toFixed(1);
           return (
-            <RNText
-              key={index}
-              style={{
-                fontSize: 14,
-                marginVertical: 2,
-                color: item.color,
-              }}
-            >
-              {item.label}: {percent}%
-            </RNText>
+            <Text key={index} style={{ fontSize: 14, color: item.color }}>
+              {item.name}: {percent}%
+            </Text>
           );
         })}
       </View>
@@ -87,4 +70,16 @@ const PieChartSimple = () => {
   );
 };
 
-export default PieChartSimple;
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  label: {
+    position: 'absolute',
+    fontSize: 12,
+    color: 'black',
+  },
+});
+
+export default PieChartWithLabels;
